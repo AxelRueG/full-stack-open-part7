@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import {
   BrowserRouter as Router,
-  Switch, Route, Link, useParams
+  Switch, Route, Link, useParams, useHistory
 } from "react-router-dom"
 
 const Menu = () => {
@@ -82,6 +82,7 @@ const Footer = () => (
 );
 
 const CreateNew = (props) => {
+  const history = useHistory()
 	const [content, setContent] = useState('');
 	const [author, setAuthor] = useState('');
 	const [info, setInfo] = useState('');
@@ -94,6 +95,11 @@ const CreateNew = (props) => {
 			info,
 			votes: 0,
 		});
+    props.setNotification(`a new anecdote ${content} created!`)
+    setTimeout(() => {
+      props.setNotification('')
+    }, 10000);
+    history.push('/')
 	};
 
 	return (
@@ -172,10 +178,11 @@ const App = () => {
 		<Router>
 			<h1>Software anecdotes</h1>
 			<Menu />
+      {notification ?? <p>{notification}</p>}
 
 			<Switch>
 				<Route path="/create">
-					<CreateNew addNew={addNew} />
+					<CreateNew addNew={addNew} setNotification={setNotification}/>
 				</Route>
 				<Route path="/about">
 					<About />
