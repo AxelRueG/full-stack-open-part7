@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import propTypes from 'prop-types'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { handleDeleteBlog, likeBlog } from '../reducers/blogsReducer'
 
 
@@ -16,8 +16,9 @@ const buttonStyle = {
   backgroundColor: '#4d4dff',
 }
 
-const Blog = ({ userId, blog }) => {
+const Blog = ({ blog }) => {
   const [showMore, setShowMore] = useState(false)
+  const user = useSelector(state => state.user)
   const dispatch = useDispatch()
 
   const handleShow = () => setShowMore(!showMore)
@@ -42,7 +43,7 @@ const Blog = ({ userId, blog }) => {
             <button onClick={handleLike}>like</button>
           </div>
           <p>{blog.user.name}</p>
-          { userId === blog.user.id &&
+          { user.id === blog.user.id &&
             <button style={buttonStyle} onClick={handleDelete}>delete</button>
           }
         </>
@@ -53,7 +54,6 @@ const Blog = ({ userId, blog }) => {
 
 Blog.propTypes = {
   blog: propTypes.object.isRequired,
-  userId: propTypes.string.isRequired,
 }
 
 export default Blog

@@ -1,28 +1,21 @@
 import React, { useState } from 'react'
 import Message from './Message'
-import blogService from '../services/blogs'
+import { useDispatch, useSelector } from 'react-redux'
+import { logUser } from '../reducers/userReducer'
 
-const LoginForm = ({ handleUser }) => {
+const LoginForm = () => {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
-  const [messageError, setMessageError] = useState(null)
+
+  const messageError = useSelector(state => state.notification)
+  const dispatch = useDispatch()
 
   const handleUsername = (e) => setUsername(e.target.value)
   const handlePassword = (e) => setPassword(e.target.value)
 
   const handleSubmit = (e) => {
     e.preventDefault()
-
-    blogService
-      .login({ username, password })
-      .then((user) => handleUser(user))
-      .catch(() => {
-        setMessageError('ivalid credentials')
-        setTimeout(() => {
-          setMessageError(null)
-        }, 5000)
-      })
-
+    dispatch(logUser({ username, password }))
     setUsername('')
     setPassword('')
   }
