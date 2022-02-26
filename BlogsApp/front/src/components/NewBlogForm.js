@@ -1,14 +1,30 @@
 import React, { useState } from 'react'
+import { useDispatch } from 'react-redux'
+import { handleAddBlog } from '../reducers/blogsReducer'
+import { setNewNotification } from '../reducers/notificationReducer'
 
-const NewBlogForm = ({ setBlogs }) => {
+const NewBlogForm = (props) => {
   const [title, setTitle] = useState('')
   const [author, setAuthor] = useState('')
   const [url, setUrl] = useState('')
 
+  const dispatch = useDispatch()
+
+  const addBlog = (blog) => {
+    try {
+      dispatch(handleAddBlog(blog))
+      props.toRef.current.toggleVisibility()
+      dispatch(setNewNotification(`a new blog ${blog.title} by ${blog.author} added`))
+    }
+    catch (e) {
+      dispatch(setNewNotification(`the blog ${blog.title} by ${blog.author} can't be added`))
+    }
+  }
+
   const handleSubmit = (e) => {
     e.preventDefault()
 
-    setBlogs({ title, author, url })
+    addBlog({ title, author, url })
 
     setTitle('')
     setAuthor('')

@@ -1,5 +1,7 @@
 import React, { useState } from 'react'
 import propTypes from 'prop-types'
+import { useDispatch } from 'react-redux'
+import { handleDeleteBlog, likeBlog } from '../reducers/blogsReducer'
 
 
 const blogStyle = {
@@ -14,16 +16,17 @@ const buttonStyle = {
   backgroundColor: '#4d4dff',
 }
 
-const Blog = ({ userId, blog, updateBlog, deleteBlog }) => {
+const Blog = ({ userId, blog }) => {
   const [showMore, setShowMore] = useState(false)
+  const dispatch = useDispatch()
 
   const handleShow = () => setShowMore(!showMore)
 
-  const handleLike = () => updateBlog(blog)
+  const handleLike = () => dispatch(likeBlog(blog))
 
   const handleDelete = () => {
     if (window.confirm(`remove blog ${blog.title} by ${blog.author}`)){
-      deleteBlog(blog)
+      dispatch(handleDeleteBlog(blog))
     }
   }
 
@@ -49,10 +52,8 @@ const Blog = ({ userId, blog, updateBlog, deleteBlog }) => {
 }
 
 Blog.propTypes = {
-  userId: propTypes.string.isRequired,
   blog: propTypes.object.isRequired,
-  updateBlog: propTypes.func.isRequired,
-  deleteBlog: propTypes.func.isRequired
+  userId: propTypes.string.isRequired,
 }
 
 export default Blog
