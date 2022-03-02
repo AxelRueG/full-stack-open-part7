@@ -1,35 +1,33 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { useSelector } from 'react-redux'
-import services from '../services/blogs'
-import Logout from './Logout'
-
-const Header = () => {
-  const user = useSelector(state => state.user)
-
-  if (user)
-    return <>
-      <h2>blogs</h2>
-      <p>{user.name} is logged in</p>
-      <Logout />
-    </>
-  else return null
-}
+import { Link } from 'react-router-dom'
+import UserInfoHeader from './UserInfoHeader'
 
 const UsersData = () => {
-  const [users, setUsers] = useState([])
+  const users = useSelector((state) => state.users)
 
-  useEffect(() => {
-    services
-      .getAllUsers()
-      .then((response) => setUsers(response))
-      .catch((e) => console.log(e))
-  }, [])
-
-  return <div>
-    <Header />
-    <h2>Users</h2>
-    { users.map(user => <p key={user.id}>{user.name} {user.blogs.length}</p>) }
-  </div>
+  return (
+    <>
+      <UserInfoHeader />
+      <h2>Users</h2>
+      <table>
+        <tbody>
+          <tr>
+            <th></th>
+            <th>blogs created</th>
+          </tr>
+          {users.map((user) => (
+            <tr key={user.id}>
+              <td>
+                <Link to={`/users/${user.id}`}>{user.name}</Link>
+              </td>
+              <td>{user.blogs.length}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </>
+  )
 }
 
 export default UsersData

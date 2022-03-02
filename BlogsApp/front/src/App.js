@@ -3,13 +3,15 @@ import LoginForm from './components/LoginForm'
 import NewBlogForm from './components/NewBlogForm'
 import Togglable from './components/Togglable'
 import Message from './components/Message'
-import { useDispatch, useSelector } from 'react-redux'
 import Blogs from './components/Blogs'
-import { loadBlogs } from './reducers/blogsReducer'
-import { userLoged } from './reducers/userReducer'
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 import UsersData from './components/UsersData'
 import Logout from './components/Logout'
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
+import { loadBlogs } from './reducers/blogsReducer'
+import { userLoged } from './reducers/userReducer'
+import { loadAllUsers } from './reducers/usersReducer'
+import UserBlogsList from './components/UserBlogsList'
 
 const App = () => {
   const user = useSelector((state) => state.user)
@@ -18,12 +20,16 @@ const App = () => {
 
   const togglableRef = useRef()
 
-  useEffect(() => dispatch(loadBlogs()), [])
+  useEffect(() => {
+    dispatch(loadBlogs())
+    dispatch(loadAllUsers())
+  }, [])
   useEffect(() => dispatch(userLoged()), [])
 
   return (
     <Router>
       <Routes>
+        <Route path="/users/:id" element={<UserBlogsList />} />
         <Route path="/users" element={<UsersData />} />
         <Route
           path="/"
