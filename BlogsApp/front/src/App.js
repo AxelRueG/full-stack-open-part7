@@ -12,6 +12,7 @@ import { loadBlogs } from './reducers/blogsReducer'
 import { userLoged } from './reducers/userReducer'
 import { loadAllUsers } from './reducers/usersReducer'
 import UserBlogsList from './components/UserBlogsList'
+import BlogView from './components/BlogView'
 
 const App = () => {
   const user = useSelector((state) => state.user)
@@ -29,6 +30,7 @@ const App = () => {
   return (
     <Router>
       <Routes>
+        <Route path="/blogs/:id" element={<BlogView />} />
         <Route path="/users/:id" element={<UserBlogsList />} />
         <Route path="/users" element={<UsersData />} />
         <Route

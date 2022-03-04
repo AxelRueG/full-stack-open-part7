@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import propTypes from 'prop-types'
 import { useDispatch, useSelector } from 'react-redux'
 import { handleDeleteBlog, likeBlog } from '../reducers/blogsReducer'
+import { Link } from 'react-router-dom'
 
 
 const blogStyle = {
@@ -33,7 +34,9 @@ const Blog = ({ blog }) => {
 
   return (
     <div style={blogStyle} className="Blog">
-      <p>{blog.title} - {blog.author}</p>
+      <Link to={`/blogs/${blog.id}`}>
+        <p>{blog.title} - {blog.author}</p>
+      </Link>
       <button onClick={handleShow}> {showMore ? 'hide' : 'view'} </button>
       {showMore && (
         <>
