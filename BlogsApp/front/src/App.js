@@ -1,25 +1,23 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect } from 'react'
 import LoginForm from './components/LoginForm'
-import NewBlogForm from './components/NewBlogForm'
-import Togglable from './components/Togglable'
-import Message from './components/Message'
-import Blogs from './components/Blogs'
 import UsersData from './components/UsersData'
-import Logout from './components/Logout'
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+  Navigate,
+} from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { loadBlogs } from './reducers/blogsReducer'
 import { userLoged } from './reducers/userReducer'
 import { loadAllUsers } from './reducers/usersReducer'
 import UserBlogsList from './components/UserBlogsList'
 import BlogView from './components/BlogView'
+import HomePage from './components/HomePage'
 
 const App = () => {
   const user = useSelector((state) => state.user)
-  const message = useSelector((state) => state.notification)
   const dispatch = useDispatch()
-
-  const togglableRef = useRef()
 
   useEffect(() => {
     dispatch(loadBlogs())
@@ -30,29 +28,25 @@ const App = () => {
   return (
     <Router>
       <Routes>
-        <Route path="/blogs/:id" element={<BlogView />} />
-        <Route path="/users/:id" element={<UserBlogsList />} />
-        <Route path="/users" element={<UsersData />} />
+        <Route
+          path="/blogs/:id"
+          element={user ? <BlogView /> : <Navigate to="/login" />}
+        />
+        <Route
+          path="/users/:id"
+          element={user ? <UserBlogsList /> : <Navigate to="/login" />}
+        />
+        <Route
+          path="/users"
+          element={user ? <UsersData /> : <Navigate to="/login" />}
+        />
+        <Route
+          path="/login"
+          element={user ? <Navigate to="/" /> : <LoginForm />}
+        />
         <Route
           path="/"
-          element={
-            <div>
-              <h2>blogs</h2>
-              {!user ? (
-                <LoginForm />
-              ) : (
-                <div>
-                  <p>{user.username}</p>
-                  {message && <Message message={message} />}
-                  <Togglable ref={togglableRef} buttonLabel="add new blog">
-                    <NewBlogForm toRef={togglableRef} />
-                  </Togglable>
-                  <Blogs />
-                  <Logout />
-                </div>
-              )}
-            </div>
-          }
+          element={user ? <HomePage /> : <Navigate to="/login" />}
         />
       </Routes>
     </Router>

@@ -22,6 +22,7 @@ const LoginForm = () => {
 
   return (
     <div>
+      <h2>blogs</h2>
       <form>
         {messageError && <Message message={messageError} />}
         <div>
