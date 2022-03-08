@@ -25,7 +25,8 @@ const App = () => {
   }, [])
   useEffect(() => dispatch(userLoged()), [])
 
-  return (
+  return (<>
+    <h2>blogs</h2>
     <Router>
       <Routes>
         <Route
@@ -50,6 +51,6 @@ const App = () => {
         />
       </Routes>
     </Router>
-  )
+  </>)
 }
 export default App

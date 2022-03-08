@@ -16,7 +16,7 @@ const BlogView = () => {
   return (<>
     <UserInfoHeader />
     <h2>{blog.title}</h2>
-    <a href={blog.url}>{blog.url}</a>
+    <a href={blog.url} target="_blank" rel="noreferrer">{blog.url}</a>
     <p>
       <span>{blog.likes}</span> likes
       <button onClick={like}>like</button>
