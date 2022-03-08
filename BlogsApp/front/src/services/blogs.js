@@ -3,10 +3,9 @@ const baseUrl = '/api/blogs'
 
 let token = null
 
-const setToken = newToken => {
+const setToken = (newToken) => {
   token = `bearer ${newToken}`
 }
-
 
 // -- LOGIN --------------------------------------------------------------------
 const login = async (credentials) => {
@@ -18,8 +17,8 @@ const login = async (credentials) => {
 const config = () => {
   return {
     headers: {
-      Authorization: token
-    }
+      Authorization: token,
+    },
   }
 }
 
@@ -35,7 +34,10 @@ const addNewBlog = async (blog) => {
 
 const addLike = async (blog) => {
   const { id, likes } = blog
-  const request = await axios.put(`${baseUrl}/${id}`, { ...blog, likes: likes+1 })
+  const request = await axios.put(`${baseUrl}/${id}`, {
+    ...blog,
+    likes: likes + 1,
+  })
   return request.data
 }
 
@@ -50,5 +52,25 @@ const getAllUsers = async () => {
   return response.data
 }
 
+// -- COMMENTS -----------------------------------------------------------------
+const getComments = async (id) => {
+  const response = await axios.get(`${baseUrl}/${id}/comments`)
+  return response.data
+}
 
-export default { setToken, getAll, login, addNewBlog, addLike, deleteBlog, getAllUsers }
+const addComment = async ({ id, content }) => {
+  const response = await axios.post(`${baseUrl}/${id}/comments`, { content })
+  return response.data
+}
+
+export default {
+  setToken,
+  getAll,
+  login,
+  addNewBlog,
+  addLike,
+  deleteBlog,
+  getAllUsers,
+  getComments,
+  addComment,
+}
