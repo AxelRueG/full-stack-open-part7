@@ -14,6 +14,7 @@ import { loadAllUsers } from './reducers/usersReducer'
 import UserBlogsList from './components/UserBlogsList'
 import BlogView from './components/BlogView'
 import HomePage from './components/HomePage'
+import Container from 'react-bootstrap/Container'
 
 const App = () => {
   const user = useSelector((state) => state.user)
@@ -25,8 +26,8 @@ const App = () => {
   }, [])
   useEffect(() => dispatch(userLoged()), [])
 
-  return (<>
-    <h2>blogs</h2>
+  return (<Container>
+    <h1>blogs</h1>
     <Router>
       <Routes>
         <Route
@@ -51,6 +52,6 @@ const App = () => {
         />
       </Routes>
     </Router>
-  </>)
+  </Container>)
 }
 export default App

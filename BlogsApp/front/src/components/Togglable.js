@@ -1,4 +1,5 @@
 import React, { useImperativeHandle, useState } from 'react'
+import Button from 'react-bootstrap/Button'
 
 // eslint-disable-next-line react/display-name
 const Togglable = React.forwardRef((props, ref) => {
@@ -16,11 +17,11 @@ const Togglable = React.forwardRef((props, ref) => {
   return (
     <div>
       <div style={hideWhenVisible}>
-        <button id='tButton' onClick={toggleVisibility}>{props.buttonLabel}</button>
+        <Button id='tButton' onClick={toggleVisibility}>{props.buttonLabel}</Button>
       </div>
       <div style={showWhenVisible}>
         {props.children}
-        <button id='tButton' onClick={toggleVisibility}>cancel</button>
+        <Button variant='secondary' id='tButton' onClick={toggleVisibility}>cancel</Button>
       </div>
     </div>
   )
