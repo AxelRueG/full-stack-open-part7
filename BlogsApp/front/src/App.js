@@ -27,7 +27,6 @@ const App = () => {
   useEffect(() => dispatch(userLoged()), [])
 
   return (<Container>
-    <h1>blogs</h1>
     <Router>
       <Routes>
         <Route

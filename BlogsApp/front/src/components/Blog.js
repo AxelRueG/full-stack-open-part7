@@ -33,7 +33,7 @@ const Blog = ({ blog }) => {
             <div className="d-grid gap-2">
               <div>
                 <em>URL:</em> { blog.url }<br/>
-                <em>author:</em> { blog.user.name } <br/>
+                <em>posted by:</em> { blog.user.name } <br/>
                 <em>likes:</em> {blog.likes} {' '}
                 <Button varinat='secondary' onClick={handleLike}>like</Button>
               </div>

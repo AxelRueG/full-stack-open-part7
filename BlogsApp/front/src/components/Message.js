@@ -1,20 +1,14 @@
 import React, { useEffect, useState } from 'react'
+import Alert from 'react-bootstrap/Alert'
 
 const Message = ({ message }) => {
   const [status, setStatus] = useState(false)
 
   useEffect(() => {
-    setStatus(message[0] === 'a' ? true : false)
+    setStatus(message.startsWith('a new')? true : false)
   },[])
 
-  const meStyle = {
-    border: status ? '2px solid green' : '2px solid red',
-    borderRadius: '10px',
-    padding: '5px',
-    backgroundColor: '#aaa',
-  }
-
-  return <p style={meStyle}>{message}</p>
+  return <Alert className="mt-2" variant={status? 'success':'danger'}>{message}</Alert>
 }
 
 export default Message

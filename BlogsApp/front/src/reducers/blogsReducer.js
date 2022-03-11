@@ -1,4 +1,5 @@
 import services from '../services/blogs'
+import { setNewNotification } from './notificationReducer'
 
 const reducer = (state = [], action) => {
   switch (action.type) {
@@ -34,13 +35,19 @@ export const loadBlogs = () => {
   }
 }
 
-export const handleAddBlog = (b) => {
+export const handleAddBlog = (b, rCurrent) => {
   return async (dispatch) => {
-    const blog = await services.addNewBlog(b)
-    dispatch({
-      type: 'ADD_BLOG',
-      blog,
-    })
+    try{
+      const blog = await services.addNewBlog(b)
+      dispatch({
+        type: 'ADD_BLOG',
+        blog,
+      })
+      rCurrent.toggleVisibility()
+      dispatch(setNewNotification(`a new blog ${b.title} by ${b.author} added`))
+    } catch (e) {
+      dispatch(setNewNotification(`the blog ${b.title} by ${b.author} can't be added`))
+    }
   }
 }
 
