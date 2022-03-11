@@ -3,6 +3,8 @@ import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import UserInfoHeader from './UserInfoHeader'
 
+import Table from 'react-bootstrap/Table'
+
 const UsersData = () => {
   const users = useSelector((state) => state.users)
 
@@ -10,12 +12,14 @@ const UsersData = () => {
     <>
       <UserInfoHeader />
       <h2>Users</h2>
-      <table>
-        <tbody>
+      <Table>
+        <thead>
           <tr>
             <th></th>
             <th>blogs created</th>
           </tr>
+        </thead>
+        <tbody>
           {users.map((user) => (
             <tr key={user.id}>
               <td>
@@ -25,7 +29,7 @@ const UsersData = () => {
             </tr>
           ))}
         </tbody>
-      </table>
+      </Table>
     </>
   )
 }
