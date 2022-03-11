@@ -17,11 +17,13 @@ const HomePage = () => {
   return (
     <div>
       <UserInfoHeader />
-      {message && <Message message={message} />}
-      <Togglable ref={togglableRef} buttonLabel="add new blog">
-        <NewBlogForm toRef={togglableRef} />
-      </Togglable>
-      <Blogs />
+      <div style={{ maxWidth: '600px' }} className='mx-auto'>
+        {message && <Message message={message} />}
+        <Togglable ref={togglableRef} buttonLabel="add new blog">
+          <NewBlogForm toRef={togglableRef} />
+        </Togglable>
+        <Blogs />
+      </div>
     </div>
   )
 }
